@@ -1,0 +1,25 @@
+@mixin separator($place,$indentation, $borderColor, $height) {
+    @if($place == 'before'){
+        &::before{
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: - calc($indentation);
+            
+            height: $height;
+            width: calc(100% + ($indentation * 2));
+            background-color: $borderColor;
+        }
+    } @else if($place == 'after'){
+        &::after{
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            left: - calc($indentation);
+            
+            height: $height;
+            width: calc(100% + ($indentation * 2));
+            background-color: $borderColor;
+        }
+    }
+}

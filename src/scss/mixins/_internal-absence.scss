@@ -1,0 +1,12 @@
+@mixin internal-absence{
+      
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 24px;
+  
+  @include mobile{
+    gap: 16px;
+    
+  }
+
+}
