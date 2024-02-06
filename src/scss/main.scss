@@ -103,6 +103,7 @@
     //com -- миксины брейкпоинты -- end9
 
     .button {
+      cursor: pointer;
       &__burger{}
       &__logo{}
       &__call{}
@@ -162,13 +163,31 @@
 
       .header-title{
         display: flex;
+        position: relative;
         flex-flow: row nowrap;
         justify-content: space-between;
-        
+
+
+        .mark{
+          @include mobile{
+            left: -$indentation-min;
+          }
+          @include tablet{
+            left: -$indentation-medium;
+          }
+          @include desktop{
+            left: -$indentation-max;
+          }
+          @include desctop-large{
+            left: -$indentation-max;
+          }  
+        }
+
         .nav__separator{
           display: none;
           flex-flow: row nowrap;
           gap: 32px;
+          
 
           button{
             cursor: pointer;
@@ -573,6 +592,9 @@
         
         //com -- expand для открытия полного контента
         .expand{
+          *{
+            cursor: pointer;
+          }
 
           label{
             display: flex;
@@ -623,7 +645,7 @@
         //com -- section__header для заголовка секций
         .section__header{
           position: relative;
-          
+
           h2{
             font-family: $font-regular;
             text-transform: uppercase;
@@ -641,22 +663,47 @@
           @include mobile{
             padding-top: $indentation-min;
             padding-bottom: $indentation-min;
+            
+            margin-left: -$indentation-min;
+            padding-left: $indentation-min;
+
+            width: calc(100% + ($indentation-min * 2));
           }
           @include tablet{
             padding-top: $indentation-min;
             padding-bottom: $indentation-min;
+            
+            margin-left: -$indentation-medium;
+            padding-left: $indentation-medium;
+
+            width: calc(100% + ($indentation-medium * 2));
           }
           @include tablet-large{
             padding-top: $indentation-min;
             padding-bottom: $indentation-min;
+
+            margin-left: -$indentation-medium;
+            padding-left: $indentation-medium;
+
+            width: calc(100% + ($indentation-medium * 2));
           }
           @include desktop{
             padding-top: $indentation-min;
             padding-bottom: $indentation-min;
+            
+            margin-left: -$indentation-max;
+            padding-left: $indentation-max;
+
+            width: calc(100% + ($indentation-max * 2));
           }  
           @include desctop-large{
             padding-top: $indentation-min;
             padding-bottom: $indentation-min;
+
+            margin-left: -$indentation-max;
+            padding-left: $indentation-max;
+
+            width: calc(100% + ($indentation-max * 2));
           }  
         }
 
@@ -707,6 +754,9 @@
             z-index: +1;
           }
           .service{
+            *{
+              cursor: pointer;
+            }
           }
 
           //com -- настройки для свайпера -- start
@@ -853,6 +903,7 @@
             }
             
             & > button{
+              cursor: pointer;
               justify-self: end;
             }
             
@@ -909,6 +960,8 @@
               font-weight: 500;
               line-height: 24px; /* 150% */
               letter-spacing: -0.2px;
+              text-wrap: wrap;
+              width: 160px;
               
             }
           
@@ -959,7 +1012,7 @@
               grid-area: term;
             }
             &__button{
-              
+              cursor: pointer;
               grid-area: button;
               
               align-self: center;
@@ -1106,7 +1159,7 @@
     opacity: 0.7218;
     line-height: 16px; /* 114.286% */
     
-    @include separator('before',$indentation-min, $border-color, 1px);
+    @include separator('before',100%, $border-color, 1px);
     
     @include mobile{
       flex-flow: column wrap;
@@ -1189,7 +1242,6 @@
 .sidebar{
   display: none;
   position: absolute;
-
   max-width: 360px;
  
   width: 100vw;
@@ -1227,7 +1279,6 @@
     @include desctop-large{
       height: 95vh;
       max-height: 920px;
-
       gap: 40px;
     } 
 
@@ -1243,6 +1294,7 @@
         @include desctop-large{
           gap: 0;
           .button__burger{
+            cursor: pointer;
             display: none;
           }
         }
@@ -1346,6 +1398,7 @@
           font-size: 16px;
           line-height: 24px; /* 150% */
           letter-spacing: -0.2px;
+          cursor: pointer;
 
           &.selected{
             color: $menu-text-color;
@@ -1406,6 +1459,14 @@
     margin-left: -16px;
     padding-left: 16px;
     margin-bottom: 24px;
+    @include desktop{
+      margin-left: -16px;
+      padding-left: 16px;
+    }
+    @include desctop-large{
+      margin-left: -32px;
+      padding-left: 32px;
+    }  
   }
 
   .mark{
@@ -1422,6 +1483,7 @@
   }
   
   .close-button{
+    cursor: pointer;
     margin-bottom: 40px;
   }
 
@@ -1437,7 +1499,7 @@
   }
   box-shadow: 16px 0px 52px 0px rgba(14, 24, 80, 0.20), -2px 0px 4px 0px rgba(69, 79, 126, 0.02);
   
-  .order-call{
+  .ordercall{
     display: grid;
 
     &__title{
@@ -1451,6 +1513,7 @@
 
 
     &__button{
+      cursor: pointer;
       justify-self: end;
 
       margin-top: 20px;
@@ -1491,10 +1554,14 @@
       line-height: 40px; /* 142.857% */
       letter-spacing: -0.6px;
       color: $title-color;
+
+      // padding-left: 50px;
+
     }
 
 
     &__button{
+     cursor: pointer;
       justify-self: end;
 
       margin-top: 20px;

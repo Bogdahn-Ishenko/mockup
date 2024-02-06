@@ -9,7 +9,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 
-const expand = document.querySelectorAll(".expand");
+const expandGallery = document.querySelectorAll(".expand-gallery");
+const expandText = document.querySelectorAll(".expand-text");
 
 if (window.innerWidth <= 1120) {
     const swiperServices = new Swiper('.section__inner--services', {
@@ -60,30 +61,44 @@ const buttonChecked = (buttons) =>{
     buttons.forEach(button =>{
         button.addEventListener('change', e =>{
 
-            if(e.target.checked === true){
+                if(button.classList.contains('expand-gallery')){
+                    if(e.target.checked === true){
 
-                toggleExpandText('about-text', 1);
-                
-                toggleExpandGallery('gallery__brends-repair',"gallery__inner--brends-repair", 2, 30, e.currentTarget, e.target.checked);
-                
-                toggleExpandGallery('gallery__tech-repair',"gallery__inner--tech-repair", 1, 30, e.currentTarget, e.target.checked);
-                
-            } 
-            else{
+                        button.querySelector('span').textContent = 'Скрыть'
+                     
+                        toggleExpandGallery('gallery__brends-repair',"gallery__inner--brends-repair", 2, 30, e.currentTarget, e.target.checked);
+                        
+                        toggleExpandGallery('gallery__tech-repair',"gallery__inner--tech-repair", 1, 30, e.currentTarget, e.target.checked);
+                        
+                    } 
+                    else if(e.target.checked === false){
+                        button.querySelector('span').textContent = 'Показать всё'
+                        
+                        toggleExpandGallery('gallery__brends-repair',"gallery__inner--brends-repair", 2, 30, e.currentTarget, e.target.checked);
+                        
+                        toggleExpandGallery('gallery__tech-repair',"gallery__inner--tech-repair", 1, 30, e.currentTarget, e.target.checked);
+                        
+                    }
 
-                toggleExpandText('about-text', 1);
-                
-                toggleExpandGallery('gallery__brends-repair',"gallery__inner--brends-repair", 2, 30, e.currentTarget, e.target.checked);
-
-                toggleExpandGallery('gallery__tech-repair',"gallery__inner--tech-repair", 1, 30, e.currentTarget, e.target.checked);
-
-            }
+                }
+                if(button.classList.contains('expand-text')){
+                    if(e.target.checked === true){
+                        toggleExpandText('about-text', 1);
+                        button.querySelector('span').textContent = 'Скрыть'
+                    } 
+                    else if(e.target.checked === false){
+                        toggleExpandText('about-text', 1);
+                        button.querySelector('span').textContent = 'Читать далее'
+                    }
+                }
+           
 
         })
     })
 }
 
-buttonChecked(expand)
+buttonChecked(expandGallery)
+buttonChecked(expandText)
 
 
 const toggleExpandText = (nameTextBlock, numberVisiblePortion, button = document.querySelector(`.${nameTextBlock}>.expand`), checked = button.querySelector('input[type="checkbox"]').checked) =>{
@@ -148,8 +163,7 @@ const toggleExpandText = (nameTextBlock, numberVisiblePortion, button = document
 
 
 const toggleExpandGallery = (nameGallery,nameGalleryWrapper, numberVisibleRows, gap, button = document.querySelector(`.${nameGallery}>.expand`), checked = button.querySelector('input[type="checkbox"]').checked) => {
-    
-  console.log();
+
     const innerW = document.querySelector('.page__wrapper').offsetWidth;
     const gallery = document.querySelector(`.${nameGalleryWrapper}`);
     const galleryCard = Array.from(gallery.querySelectorAll('.gallery__card'));
@@ -159,15 +173,15 @@ const toggleExpandGallery = (nameGallery,nameGalleryWrapper, numberVisibleRows, 
     const maxCardInRow = Math.floor((innerW) / cardWidth);
     const maxCardInRowGap = Math.floor((innerW - gap * (maxCardInRow)) / cardWidth);
 
-
     if(button !== undefined && button.parentElement.classList.contains(nameGallery)){
-
+        // document.querySelector(`.${button.className} * span`).textContent = 'Скрыть' 
         for(let i = maxCardInRowGap * numberVisibleRows; i < galleryCard.length; i++) {
             galleryCard[i].style.display = 'none';
         }
     } 
-
+    
     for(let i = 0; i < maxCardInRowGap * numberVisibleRows && i < galleryCard.length; i++){
+        // document.querySelector(`.${button.className} * span`).textContent = 'Скрыть' 
         galleryCard[i].style.display = 'grid';
     }
 
@@ -179,7 +193,6 @@ const toggleExpandGallery = (nameGallery,nameGalleryWrapper, numberVisibleRows, 
             galleryCard.forEach(card => {
                 card.style.display = 'grid';
             })
-
 
         } 
         else if (checked === false){
@@ -344,31 +357,51 @@ const modals = document.querySelectorAll('dialog');
 
 
 
-const toggleModal = (modals,nameClassButtonOpen, nameClassButtonClose, nameClassButtonSubmit) => {
+const toggleModal = (modals,nameClassButtonOpen, nameClassButtonClose, nameClassButtonSubmit, nameModal) => {
 
     document.querySelectorAll(`.${nameClassButtonOpen}`).forEach(button => button.addEventListener('click', (e) => {
 
         modals.forEach(modal => {
             if(modal.open){
+                modal.style.overflow = 'auto'
                 root.classList.add('modal-active');
                 document.body.style.overflow = 'hidden';
+               document.querySelector('.sidebar').style.zIndex = "0";
             }
         });
     
     }))
 
     document.querySelectorAll(`.${nameClassButtonClose}`).forEach(closeButton => closeButton.addEventListener('click', e =>{
-        console.log(e.currentTarget);
+    
         root.classList.remove('modal-active');
         document.body.style.overflow = 'auto';
+        document.querySelector('.sidebar').style.zIndex = "2";
     }))
-    document.querySelectorAll(`.${nameClassButtonSubmit}`).forEach(closeButton => closeButton.addEventListener('click', e =>{
-        console.log(e.currentTarget);
+    document.querySelector(`.${nameModal}`).addEventListener('submit', function(e) {
+        e.preventDefault();
+        let data = new FormData(this);
+        if(data.get('firstName')){
+            alert('Скоро с вами свяжутся ' + data.get('firstName'));
+        } else{
+            alert('Скоро с вами свяжутся');
+        }
+
+        modals.forEach(modal => {
+            if(modal.open){
+                modal.close()
+                document.querySelector('.sidebar').style.zIndex = "2";
+            }
+        });
+
         root.classList.remove('modal-active');
         document.body.style.overflow = 'auto';
-    }))
+
+    });
+
+
 };
 
-toggleModal(modals, 'button__repair', 'close-button', 'order-call__button')
-toggleModal(modals, 'button__checkstatus', 'close-button', 'feedback__button')
+toggleModal(modals, 'button__repair', 'close-button', 'order-call__button', 'ordercall')
+toggleModal(modals, 'button__checkstatus', 'close-button', 'feedback__button', 'feedback')
  

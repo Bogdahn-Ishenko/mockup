@@ -1,6 +1,6 @@
 html {
   box-sizing: border-box;
-
+  cursor: default;
  height: 100%;
 }
 
@@ -73,6 +73,8 @@ button{
 
   width: max-content;
   height: max-content;
+
+  cursor: pointer;
 }
 
 input,
